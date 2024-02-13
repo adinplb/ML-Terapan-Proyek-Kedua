@@ -15,7 +15,6 @@ Proyek ini bertujuan untuk mengembangkan sistem rekomendasi pekerjaan yang dibua
 ### Problem Statement
 Berdasarkan uraian latar belakang masalah yang telah dijelaskan sebelumnya, berikut rumusan masalah dari proyek ini:
 1. Bagaimana proses pembuatan sistem rekomendasi pekerjaan berdasarkan data historis dari pekerjaan yang ditawarkan, detail profil perusahaan, keterampilan user dan kualifikasi perusahaan?
-
 2. Bagaimana proses pembuatan sistem rekomendasi pekerjaan berdasarkan data kolaboratif dari pengguna lain dengan kualifikasi yang dicari?
 
 ### Goals
@@ -42,26 +41,57 @@ Algortima CF bergantung pada pendapat komunitas pengguna. Collaborative filterin
 
 
 ## Data Understanding
-Dataset used are collected from Kaggle. It is [Breast Cancer Wisconsin (Diagnostic) Dataset](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data/code). Dataset is in CSV File Format which total class contribution are 357 Benign and 212 Malignant. Dataset is consist of 569 rows and 33 Features; 1 Categorical Features and 32 Numerical Features. One Categorical Features will be converted into Binary Integer as Target Labelled. Features are computed from a digitized image of a fine needle aspirate (FNA) of a breast mass. They describe characteristics of the cell nuclei present in the image. All feature values are recorded with four significant digits and none missing values. The extracted features are as follows: <br>
-1. ***Radius***: The radius of and individual nucleaus is measured by averaging the length of the radial line segments defined by the centeroid of the snake and the individual snake points.
-2. ***Perimeter***: The total distance between the snake point constitues the nuclear perimeter.
-3. ***Area***: Nuclear area is measured simply by counting the number of pixels on the interior of the snake and adding one-hald of the pixels in the perimeter.
-4. ***Compactness***: Perimeter and area are combined to give a measure of the compactness of the cell nuclei using the formula perimeter<sup>2</sup>/area.
-5. ***Smoothness***: Quantified by measuring the difference between the length of a radial line and the mean length of the lines surrounding it.
-6. ***Concavity***: Severity of concave portions of the contour
-7. ***Concave points***: Number of concave portions of the contour
-8. ***Symmetry***: In order to measure symmetry, the major axis, or longest chord through the center, is found.
-9. ***Fractal Dimension***: Approximated using the "Coastline Approximation" described by Mandelbrot.
-10. ***Texture***: meaasured by finding the variance of the gray scale intensities in the component pixels.<br>
-11. ***Diagnostic***: Benign and Malignant
+Dataset yang digunakan adalah dataset yang diambil dari Kaggle yakni [Linkedin Job Postings 2023](https://www.kaggle.com/datasets/arshkon/linkedin-job-postings). Dataset dalam bentuk Format CSV yang terdiri dari 4 kategori yaitu
+1. job_postings.csv
+   - job_id: ID pekerjaan yang didefinisikan oleh situs LinkedIn
+   - company_id: ID perusahan yang terkait posting pekerjaan (company_details/companies.csv dan company_details/employee_counts.csv)
+   - title: Judul pekerjaan
+   - description: deskripsi pekerjaan
+   - max_salary: gaji maximum
+   - med_salary: jadi rata-rata
+   - min_salary: gaji minimum
+   - pay_period: periode pembayaran gaji (Hourly, Monthly, Yearly)
+   - formatted_work_type: Jenis pekerjaan (Fulltime, Parttime, Contract)
+   - location: Lokasi pekerjaan
+   - applies: jumlah pendaftar yang telah melakukan submit berkas
+   - original_listed_time: Original time the job was listed
+   - remote_allowed: apakah pekerjaan bersifat remote atau tidak
+   - views: jumlah yang telah melihat postingan pekerjaan tersebut 
+   - job_posting_url: URL to the job posting on a platform
+   - application_url: URL where applications can be submitted
+   - application_type: Jenis proses seleksi berkas pendaftar (offsite, complex/simple onsite)
+   - expiry: Expiration date or time for the job listing
+   - closed_time: Time to close job listing
+   - formatted_experience_level: Job experience level (entry, associate, executive, etc)
+   - skills_desc: Description detailing required skills for job
+   - listed_time: Time when the job was listed
+   - posting_domain: Domain of the website with application
+   - sponsored: Whether the job listing is sponsored or promoted.
+   - work_type: Type of work associated with the job
+   - currency: Currency in which the salary is provided.
+   - compensation_type: Type of compensation for the job. <br>
+2. job_details/benefits.csv
+   - job_id
+   - type: jenis manfaat yang disediakan oleh perusahaan seperti asuransi kesehatan, dan sebagainya
+   - inferred: apakah manfaat ditag secara eksplisit atau melalui teks oleh linkedin <br>
+3. company_details/companies.csv
+   - company_id: The company ID as defined by LinkedIn
+   - name: Company name
+   - description: Company description
+   - company_size: Company grouping based on number of employees (0 Smallest - 7 Largest)
+   - country: Country of company headquarters.
+   - state: State of company headquarters.
+   - city: City of company headquarters
+   - zip_code: ZIP code of company's headquarters.
+   - address: Address of company's headquarters
+   - url: Link to company's LinkedIn page <br>
+4. company_details/employee_counts.csv
+   - company_id: The company ID
+   - employee_count: Number of employees at company
+   - follower_count: Number of company followers on LinkedIn
+   - time_recorded: Unix time of data collection <br>
 
->Additional Notes:
->_mean, _se (standar error) and _worst (largest): mean of the 3 largest values of these features were computed for each image, resulting in 30 features. For instance: field 3 is mean radius, field 13 is radius_se, field 23 is worst radius.
-
- . | radius_mean | radius_se | radius_worst | 
- --- | --- | --- | --- | 
-Definition | mean of distances from center to points on the perimeter | standard error for the mean of distances from center to points on the perimeter | "worst" or largest mean value for mean of distances from center to points on the perimeter | 
-Values | 17.99 | 1.095| 25.38 | 
+Total kesuluruhan dataset adalah 33,000+ pekerjaan yang dipublikasi dan terdaftar selama 2 hari, terpisah beberapa bulan. Setiap postingan berisi 27 atribut berharga termasuk judul, deskripsi pekerjaan, gaji, lokasi, URL aplikasi, dan jenis pekerjaan (remote, kontrak, dll), di samping file terpisah yang berisi manfaat, keterampilan, dan industri yang terkait dengan setiap posting. Mayoritas pekerjaan juga ditautkan ke perusahaan, yang semuanya terdaftar dalam file csv lain yang berisi atribut seperti deskripsi perusahaan, lokasi kantor pusat, dan jumlah karyawan, dan jumlah pengikut.
 
 ### Exploratory Data Analysis and Visualization
 #### Check Data Type
