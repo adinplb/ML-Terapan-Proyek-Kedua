@@ -10,20 +10,17 @@ Di era digital saat ini, baik pemberi kerja maupun pencari kerja dihadapkan pada
 
 
 ## Business Understanding
-Breast Tumor Diagnosis has been conducted by [Fine Needle Aspiration (FNA)](https://cancer.ca/en/treatments/tests-and-procedures/fine-needle-aspiration-fna); a type of biopsy which uses a very thin needle and syringe to remove a sample of cells, tissue or fluid from an abnormal area or lump in the body. FNAs has been able to diagnose successfully in examining the cell nuclear phenotypes and become a features which indicates a higher likelihood of malignancy. The computer vision diagnostics system extracts 10 different features from the snake-generated cell nuclei boundaries. Those extracted features are numerically modeled which consist of ***Radius***, ***Perimeter***, ***Area***, ***Compactness***, ***Smoothness***, ***concavity***, ***Concave Points***, ***Symmetry***, ***Fratal Dimension*** and ***Texture***. In addition, there is a diagnosis breast tumor features which represent a malignant or bening so in this project there is a target labelled to predict whether it is a benign or malignant tumor. A Supervised Machine Learning model is suitable for solving this issue by using the quantitative cell nuclear phenotypes of Breast Tumor and followed by handling imbalanced data.
-
-
-Artikel ini menyajikan sebuah sistem rekomendasi yang bertujuan untuk membantu para pencari kerja untuk menemukan pekerjaan yang sesuai. Pertama, tawaran pekerjaan dikumpulkan dari situs web pencari kerja kemudian disiapkan untuk mengekstrak atribut yang berarti seperti jabatan dan keterampilan teknis. Tawaran pekerjaan dengan fitur yang sama dikelompokkan ke dalam cluster. Ketika pencari kerja menyukai satu pekerjaan yang termasuk dalam sebuah klaster, dia mungkin akan menemukan pekerjaan lain dalam klaster tersebut yang akan dia sukai juga. Daftar rekomendasi teratas disarankan setelah mencocokkan data dari klaster pekerjaan dan perilaku pencari kerja, yang terdiri dari interaksi pengguna seperti lamaran, suka, dan peringkat
+Proyek ini bertujuan untuk mengembangkan sistem rekomendasi pekerjaan yang dibuat untuk membantu para pencari kerja dalam menemukan pekerjaan yang sesuai dengan minat dan preferensi mereka. Selain itu, para pemberi kerja atau recruiter dari suatu perusahaan dapat menemukan target pekerja yang sesuai dengan kualifikasi dan keterampilan yang dibutuhkan suatu perusahaan. Dengan memanfaatkan model Machine Learning sistem rekomendasi, data user dan data perusahaan dari situs Job Posting yang telah diekstrak, diharapkan sistem ini dapat terus berkembang dan memberikan kemudahan bagi para pemberi kerja dan pencari kerja dalam mendapatkan perkerjaan dan pekerja yang sesuai dengan kriteria atau kualifasikasi yang relevan. 
 
 ### Problem Statement
-1. Does each feature in this dataset have an influence on breast tumor prediction model?
-2. Which Machine Learning model present the best prediction model and could solve the issue?
-3. How does handling imbalanced data give an affect to prediction model?
+Berdasarkan uraian latar belakang masalah yang telah dijelaskan sebelumnya, berikut rumusan masalah dari proyek ini:
+1. Bagaimana proses pembuatan sistem rekomendasi pekerjaan berdasarkan data historis dari pekerjaan yang ditawarkan, detail profil perusahaan, keterampilan user dan kualifikasi perusahaan?
+
+2. Bagaimana proses pembuatan sistem rekomendasi pekerjaan berdasarkan data kolaboratif dari pengguna lain dengan kualifikasi yang dicari?
 
 ### Goals
-1. Find features that have an influential on breast tumor prediction
-2. Find the best Machine Learning Model that could possibly solve the problem
-3. Find the affect of SMOTE in handling imbalanced data for model prediction
+1. Membuat sistem rekomendasi pekerjaan berdasarkan data historis
+2. Membuat sistem rekomenasi pekerjaan berdasarkan data kolaboratif
 
 ### Solution Statements
 To reach out good Breast Cancer Prediction, using 3 different type of Binary Classification model for predicting whether the diagnosis is benign (0) or malignant (1) in Supervised Machine Learning Algorithms. Those algorithms are suitable for predicting one of two possible outcomes. In addtion, SMOTE will be implemented as well for handling imbalanced data. The algorithms for binary classification are as follows: <br>
