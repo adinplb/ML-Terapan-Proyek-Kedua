@@ -93,16 +93,19 @@ Dataset yang digunakan adalah dataset yang diambil dari Kaggle yakni [Linkedin J
 
 Total kesuluruhan dataset adalah 33,000+ pekerjaan yang dipublikasi dan terdaftar selama 2 hari, terpisah beberapa bulan. Setiap postingan berisi 27 atribut berharga termasuk judul, deskripsi pekerjaan, gaji, lokasi, URL aplikasi, dan jenis pekerjaan (remote, kontrak, dll), di samping file terpisah yang berisi manfaat, keterampilan, dan industri yang terkait dengan setiap posting. Mayoritas pekerjaan juga ditautkan ke perusahaan, yang semuanya terdaftar dalam file csv lain yang berisi atribut seperti deskripsi perusahaan, lokasi kantor pusat, dan jumlah karyawan, dan jumlah pengikut.
 
-Untuk memahami sebuah data dengan memiliki jumlah yang banyak akan lebih efisien jika kita menggunakan teknik yang disebut dengan exploratory data analysis. Dalam proyek ini, menggunakan beberapa visualisasi yang ada diikuti dengan pemeriksaan jenis data, missing values, data terduplikasi dan analisis statistik deskriptif.
+Untuk memahami sebuah data dengan memiliki jumlah yang banyak akan lebih efisien jika kita menggunakan teknik yang disebut dengan exploratory data analysis. Dalam proyek ini, menggunakan beberapa visualisasi yang ada diikuti dengan pemeriksaan jenis data, missing values, data terduplikasi dan analisis statistik deskriptif. <br>
 
-![df info](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/34570f7b-7e16-414e-89f6-0599f85d0f78)
+![check data type](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/c561b840-576f-4991-8c50-03997b10cb20)
 <br>
-![df isna](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/e14838d5-5672-4119-95dd-fd14397d81d0)
+![describe](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/740ae7f7-3fe1-4d7c-91bd-b521dd74f58d)
 <b>
-![df duplicated](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/78819fb9-3ed0-47f7-97fa-da9328168a27)
+![wordcloud job title](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/6e8909a8-28b8-415d-a173-8e0bf0c07325)
 <br>
-![df describe](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/9b0f5c49-5927-4b31-adad-21dcd35e6f67)
-
+![work_type](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/e7c6448e-463d-4a7b-b922-2363378b2459)
+<br>
+![univariate](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/f340e85f-cbce-47e5-ad7a-9caf56342bc4)
+<br>
+![multivariate](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/ae7a299a-cc44-4a88-99e2-58a447a7759c)
 
 ## Data Preparation
 At this stage, PCA feaures reduction, change target labelled type into binary integer, IQR Method, SMOTE and Feature Scalling are approriate techniques for this type of dataset. Moreover, the class contribution in dataset are indeed imbalanced; 357 Benign and 212 Malignant so SMOTE or Synthetic Minority Over-sampling Technique will be implemented. Removing outliers will be performed as well and followed by feature scaling or z-score normalization where they have a mean of 0 and a standard deviation of 1. The data size will be splitted into train set and test set with ratio 80:20. To understand deeply the ins and outs of data preparation is by looking at these several steps: <br>
