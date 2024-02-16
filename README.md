@@ -93,65 +93,16 @@ Dataset yang digunakan adalah dataset yang diambil dari Kaggle yakni [Linkedin J
 
 Total kesuluruhan dataset adalah 33,000+ pekerjaan yang dipublikasi dan terdaftar selama 2 hari, terpisah beberapa bulan. Setiap postingan berisi 27 atribut berharga termasuk judul, deskripsi pekerjaan, gaji, lokasi, URL aplikasi, dan jenis pekerjaan (remote, kontrak, dll), di samping file terpisah yang berisi manfaat, keterampilan, dan industri yang terkait dengan setiap posting. Mayoritas pekerjaan juga ditautkan ke perusahaan, yang semuanya terdaftar dalam file csv lain yang berisi atribut seperti deskripsi perusahaan, lokasi kantor pusat, dan jumlah karyawan, dan jumlah pengikut.
 
-### Exploratory Data Analysis and Visualization
-#### Check Data Type
-```ruby
-df.info()
-```
+Untuk memahami sebuah data dengan memiliki jumlah yang banyak akan lebih efisien jika kita menggunakan teknik yang disebut dengan exploratory data analysis. Dalam proyek ini, menggunakan beberapa visualisasi yang ada diikuti dengan pemeriksaan jenis data, missing values, data terduplikasi dan analisis statistik deskriptif.
+
 ![df info](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/34570f7b-7e16-414e-89f6-0599f85d0f78)
-
-#### Check Missing Values
-```ruby
-print(df.isna().sum())
-```
+<br>
 ![df isna](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/e14838d5-5672-4119-95dd-fd14397d81d0)
-
-#### Check Data Duplication
-```ruby
-print("Jumlah yang terduplikasi:", df.duplicated().sum())
-```
+<b>
 ![df duplicated](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/78819fb9-3ed0-47f7-97fa-da9328168a27)
-
-#### Descriptive Statistics Analysis
-```ruby
-df.describe()
-```
+<br>
 ![df describe](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/9b0f5c49-5927-4b31-adad-21dcd35e6f67)
 
-#### Check Outliers
-Four Example Features used to Check Outliers:
-```ruby
-sns.boxplot(x=df['radius_mean'])
-sns.boxplot(x=df['texture_mean'])
-sns.boxplot(x=df['perimeter_mean'])
-sns.boxplot(x=df['area_mean'])
-```
-| radius_mean | texture_mean | perimeter mean | area mean |
-| :---: | :---: | :---: | :---: | 
-| ![radius mean](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/319ae8e9-47d5-46df-b475-69291e915794)  | ![texture mean](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/2b529395-c8a8-4c5d-8dd4-68ab9de92e6a) |  ![perimeter mean](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/e3edbf37-30f9-4cca-88b8-06df171c8002)  | ![area mean](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/cac1e7b7-c579-4d9a-b860-67c326c7a144) |
-
-#### Univariate Analysis
-```ruby
-df.hist(bins=50, figsize=(20,15))
-plt.show()
-```
-![univariate analysis](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/ac1b6f89-6e0e-4a0f-a564-19ed276c37bc)
-
-#### Multivariate Analysis
-```ruby
-# Observe relation among numerical features using pairplot() 
-sns.pairplot(df, diag_kind = 'kde')
-```
-![pairplot](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/0b1edff5-93de-4089-8fdc-1fe13e92836f)
-
-```ruby
-plt.figure(figsize=(20, 18))
-correlation_matrix = df.corr().round(2)
-# parameter anot=true is used for printing value inside the box
-sns.heatmap(data=correlation_matrix, annot=True, cmap='coolwarm', linewidths= 0.5, )
-plt.title("Correlation Matrix untuk Fitur Numerik ", size=20)
-```
-![multivariate](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/06078f33-9f1a-4f04-849f-90fb6d9e97de)
 
 ## Data Preparation
 At this stage, PCA feaures reduction, change target labelled type into binary integer, IQR Method, SMOTE and Feature Scalling are approriate techniques for this type of dataset. Moreover, the class contribution in dataset are indeed imbalanced; 357 Benign and 212 Malignant so SMOTE or Synthetic Minority Over-sampling Technique will be implemented. Removing outliers will be performed as well and followed by feature scaling or z-score normalization where they have a mean of 0 and a standard deviation of 1. The data size will be splitted into train set and test set with ratio 80:20. To understand deeply the ins and outs of data preparation is by looking at these several steps: <br>
