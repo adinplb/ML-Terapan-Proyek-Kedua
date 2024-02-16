@@ -108,103 +108,60 @@ Untuk memahami sebuah data dengan memiliki jumlah yang banyak akan lebih efisien
 ![multivariate](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/ae7a299a-cc44-4a88-99e2-58a447a7759c)
 
 ## Data Preparation
-At this stage, PCA feaures reduction, change target labelled type into binary integer, IQR Method, SMOTE and Feature Scalling are approriate techniques for this type of dataset. Moreover, the class contribution in dataset are indeed imbalanced; 357 Benign and 212 Malignant so SMOTE or Synthetic Minority Over-sampling Technique will be implemented. Removing outliers will be performed as well and followed by feature scaling or z-score normalization where they have a mean of 0 and a standard deviation of 1. The data size will be splitted into train set and test set with ratio 80:20. To understand deeply the ins and outs of data preparation is by looking at these several steps: <br>
+Pada tahap ini, lakukan data combination dengan fungsi merge, memilih data dengan fungsi unique, mengubah data dalam bentuk array, melakukan vektorisasi, TF-IDF 
 
-1. Convert "Diagnosis" Feature "object" type into "binary integer" values 0 and 1.
->Why is it necessary for this technique to be carried out?
->>Answer: require input features to be numerical so the algorithms can be performed.
-```ruby
-df['diagnosis']=df['diagnosis'].map({'M':1,'B':0})
-```
-<img src="https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/a29b20da-b0f5-4b34-b066-2c2ed1e285d9"/> <img src="https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/89166fd5-dce2-499c-8a6d-3909cafa9db2"/> 
 
-2. Remove outliers using IQR Method in all Features. Then, check data shape.
->Why is it necessary for this IQR Method to be carried out?
->>Answer: outliers can increase variance in the dataset and the Interquartile Range (IQR) method is a robust and commonly used technique for detecting and removing outliers as well. 
-```ruby
-Q1 = df_baru.quantile(0.25)
-Q3 = df_baru.quantile(0.75)
-IQR=Q3-Q1
-df_baru=df_baru[~((df_baru<(Q1-1.5*IQR))|(df_baru>(Q3+1.5*IQR))).any(axis=1)]
 
-# Check data shape after dropping outliers
-df_baru.shape
-```
-![data shape after drop outliers](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/26534822-5f9f-451a-9efe-cbccc9b7c3eb) <br>
-The dataset has been cleaned and has 398 samples
+Berikut ini merupakan tahapan-tahapan yang dilakukan dalam mempersiapkan data untuk model yang dibangun dengan metode Content Based Filtering.
 
-3. Reduce dimension of radius_mean, perimeter_mean, area_mean, radius_worst, perimeter_worst and area_worst feature using PCA
->Why is it necessary for reducing those features using PCA to be carried out?
->>Answer: The pairplot result shows those six features have a high correlation so they can be reduced using PCA which help to reduce noise and redundancy in dataset.
-```ruby
-from sklearn.decomposition import PCA
-pca = PCA(n_components=1, random_state=123)
-pca.fit(df_baru[['radius_mean', 'perimeter_mean', 'area_mean', 'radius_worst', 'perimeter_worst', 'area_worst']])
-df_baru['dimension'] = pca.transform(df_baru.loc[:, ('radius_mean', 'perimeter_mean', 'area_mean', 'radius_worst', 'perimeter_worst', 'area_worst')]).flatten()
-df_baru.drop(['radius_mean', 'perimeter_mean', 'area_mean', 'radius_worst', 'perimeter_worst', 'area_worst'], axis=1, inplace=True)
-df_baru
-```
-![dimension](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/bf28fcf9-1c18-4ecd-8284-fd15c807384a)
+Menghilangkan Missing Value
 
-4. Splitting Data into Train Set and Test Set + SMOTE For imbalanced data
->Why is it necessary for handling imbalanced data using SMOTE to be carried out?
->>Answer: To maximize overall accuracy and minimize MSE which can be misleading when classes are imbalanced and SMOTE (Synthetic Minority Over-sampling Technique) is one of the method used to address this issue.
-```ruby
-pip install imbalanced-learn
-```
-```ruby
-from sklearn.model_selection import train_test_split
-from imblearn.over_sampling import SMOTE
+Setelah dilakukan proses penggabungan data dari beberapa variabel, ditemukan missing value akibat banyaknya fitur yang digabungkan dari variabel-variabel tersebut. Missing value ini ditemukan pada fitur 'tag', dimana missing value yang terdeteksi sebanyak 52.549 data. Meskipun jumlah data ini sangat signifikan, missing value ini akan dihapus dari dataset dikarenakan fitur ini kurang berpengaruh terhadap sistem rekomendasi yang akan dibangun.
 
-# Assuming X contains your features and y contains the corresponding labels
-# Perform train-test split
+Menghapus Data Duplikat
 
-X = df.drop(["diagnosis"],axis =1)
-y = df["diagnosis"]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+Selanjutnya, dilakukan penghapusan data duplikat dari fitur 'movieId' menggunakan fungsi drop_duplicates(). Langkah ini penting untuk dilakukan karena dalam pemodelan yang dibangun, hanya akan digunakan fitur 'movieId' yang unik untuk membangun model rekomendasi.
 
-# Apply SMOTE only on the training data
-smote = SMOTE(random_state=42)
-X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
+Membuat Dictionary
 
-# Now, X_train_resampled and y_train_resampled contain the resampled data using SMOTE,
-# while X_test and y_test remain unchanged
+Selanjutnya, dilakukan proses pembuatan dictionary yang digunakan untuk menentukan pasangan key-value pada data yang telah disiapkan sebelumnya. Setelah proses ini selesai dijalankan, data telah siap untuk dimasukkan ke dalam pemodelan untuk model yang dibangun dengan metode Content Based Filtering.
 
-# Proceed with model training and evaluation using the resampled training data and the original test data
+Sedangkan berikut ini merupakan tahapan-tahapan yang dilakukan dalam mempersiapkan data untuk model yang dibangun dengan metode Collaborative Filtering.
 
-# Count the number of samples in each class before and after SMOTE
-unique_train, counts_train = np.unique(y_train, return_counts=True)
-unique_train_resampled, counts_train_resampled = np.unique(y_train_resampled, return_counts=True)
+Memahami Data Rating
 
-# Create a DataFrame to display the results
-data = {
-    'Class': unique_train,
-    'Original Count': counts_train,
-    'Resampled Count': counts_train_resampled
-}
+Pada tahap ini, perlu dilakukan pemahaman terhadap data rating yang dimiliki. Data rating berisi penilaian yang diberikan oleh pengguna untuk berbagai film. Penilaian ini akan menjadi dasar dalam membangun model rekomendasi menggunakan metode Collaborative Filtering.
 
-df_result = pd.DataFrame(data)
-print("Before SMOTE:")
-print(df_result)
+Melakukan Proses Encoding
 
-# Visualize the distribution of classes after SMOTE
-print("\nAfter SMOTE:")
-print("Classes:", unique_train_resampled)
-print("Counts:", counts_train_resampled)
-```
-![output smote](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/0c0b9474-ad9f-4f9a-9482-8648a8642ae4)
+Encoding adalah proses mengubah data dari satu bentuk ke bentuk lain yang lebih sesuai untuk digunakan dalam suatu model atau algoritma [5]. Dalam Collaborative Filtering, encoding diperlukan untuk mengubah data kategorikal, seperti nama pengguna ('user') atau ID film ('movieId') menjadi bentuk numerik (indeks bilangan bulat) sehingga dapat diolah oleh model. Indeks ini memudahkan proses perhitungan dalam model dan menghindari kesalahan saat melakukan perbandingan. Berikut ini merupakan contoh proses encoding untuk fitur 'user' :
 
-5. Feature Scalling using Z-Score Normalization
->Why is it necessary for feature scalling to be carried out?
->>Answer: To ensures all features have a similar scale, typically between 0 and 1 or around a mean of 0 with a standard deviation of 1. 
-```ruby
-scaler = StandardScaler()
-scaler.fit(X_train[numerical_features])
-X_train[numerical_features] = scaler.transform(X_train.loc[:, numerical_features])
-X_train[numerical_features].head()
-X_train[numerical_features].describe().round(4)
-```
-![standarisation](https://github.com/adinplb/Belajar-Machien-Learning-Terapan-Dicoding/assets/61041719/ed2b1602-7ea1-4089-a6ed-c9d7c9037585)
+Untuk setiap nilai unik yang terdapat dalam fitur 'user' akan diubah menjadi indeks bilangan bulat.
+Misalnya terdapat 5 data pengguna dalam suatu list seperti berikut : ['UserA', 'UserB', 'UserC', 'UserA', 'UserB']
+Maka proses encoding akan mengubahnya menjadi [0, 1, 2, 0, 1]
+Dapat dilihat bahwa 'UserA' di-encode menjadi bilangan bulat dengan indeks 0, 'UserB' diubah menjadi bilangan bulat dengan indeks 1, dan 'UserC' diubah menjadi bilangan bulat dengan indeks 2. Proses encoding ini akan membantu menghindari kesalahan saat melakukan perbandingan dan juga memudahkan perhitungan dalam model Collaborative Filtering.
+
+Memetakan ‘userId’ dan ‘movieId’ ke Dataframe yang Berkaitan.
+
+Kemudian, akan dilakukan pemetaan 'userId' dan 'movieId' ke dataframe yang berkaitan. Hal ini memungkinkan untuk menyusun data secara efisien dan membentuk matriks peringkat (rating matrix) yang diperlukan dalam model Collaborative Filtering.
+
+Mengecek Beberapa Hal dalam Data.
+
+Proses ini mencakup pemeriksaan beberapa hal seperti jumlah pengguna (user) dan jumlah film yang ada dalam dataset. Kemudian, perlu juga mengubah nilai rating menjadi float agar dapat digunakan dalam perhitungan yang lebih tepat.
+
+Membagi Data
+
+Langkah selanjutnya adalah membagi data menjadi dua subset, yaitu data latih (training data) dan data validasi (validation data) dengan rasio 80 : 20. Data latih digunakan untuk melatih model Collaborative Filtering dengan cara mempelajari pola dari data rating yang ada, sementara data validasi digunakan untuk menguji kinerja model yang telah dilatih dan melihat sejauh mana model dapat memberikan rekomendasi yang akurat dan relevan terhadap data yang belum pernah dilihat sebelumnya. Penggunaan data latih dan data validasi ini bertujuan untuk mengevaluasi performa model dan mencegah overfitting
+
+
+
+metode PCA, ubah tipe data fitur kategorikal menjadi bilangan biner integer, Metode IQR, SMOTE, dan Scalling Fitur akan dilakukan pada penelitian ini. Selain itu, dataset memang tidak seimbang; 357 Benign dan 212 Malignant sehingga SMOTE atau Teknik Over-sampling Minoritas Sintetis akan diterapkan. Menghapus outlier akan dilakukan juga dan diikuti oleh penskalaan fitur dengan normalisasi skor-z dimana hasil mean akan menjadi 0 dan standar deviasi 1. Ukuran data akan dipecah menjadi train set dan test set dengan rasio 80:20. Berikut tahapan persiapan data:
+- Ubah "Diagnosis" Fitur tipe "objek" menjadi nilai "biner integer" 0 dan 1. Tujuan dialkukan ini ialah model membutuhkan fitur input dalam bentuk numerik sehingga algoritma dapat diproses
+- Hapus outliers menggunakan Metode IQR di semua Fitur dan periksa bentuk data sehingga didapatkan Dataset bersih sebanyak 398 sampel. Metode ini dilakukan dengan tujuan agar pencilan dapat meningkatkan varians dalam bentuk dataset sehingga metode IQR merupakan teknik yang kuat dalam mendeteksi dan menghapus pencilan. 
+- Kurangi dimensi fitur radius_mean, perimeter_mean, area_mean, radius_worst, perimeter_worst, dan area_worst menggunakan PCA. Hasil pairplot menunjukkan keenam fitur numerik tersebut memiliki korelasi yang tinggi sehingga dapat dikurangi menggunakan PCA yang membantu mengurangi noise dan redudancy dalam dataset
+- Kemudian, memisahkan data menjadi Train Set and Test Set + SMOTE untuk Penanganan Imbalanced data dan hanya dilakukan pada data train saja. Tujuan dilakukannya SMOTE guna memaksimalkan akurasi keseluruhan dan mempertahankan keaslian data saat melakukan latih data. 
+- Melakukan Feature Scalling menggunakan Z-Score Normalization. Tujuan dari teknik ini ialah memastikan semua fitur memiliki skala yang sama sehingga hasil mean menjadi 0 dan standar deviasinya menjadi 1.
+
 
 
 ## Modelling
