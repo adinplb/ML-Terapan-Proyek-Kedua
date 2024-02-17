@@ -95,38 +95,23 @@ Total kesuluruhan dataset adalah 33,000+ pekerjaan yang dipublikasi dan terdafta
 
 Untuk memahami sebuah data dengan memiliki jumlah yang banyak akan lebih efisien jika kita menggunakan teknik yang disebut dengan exploratory data analysis. Dalam proyek ini, menggunakan beberapa visualisasi yang ada diikuti dengan pemeriksaan jenis data, missing values, data terduplikasi dan analisis statistik deskriptif. <br>
 
-![check data type](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/c561b840-576f-4991-8c50-03997b10cb20)
-<br>
-![describe](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/740ae7f7-3fe1-4d7c-91bd-b521dd74f58d)
-<b>
-![wordcloud job title](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/6e8909a8-28b8-415d-a173-8e0bf0c07325)
-<br>
-![work_type](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/e7c6448e-463d-4a7b-b922-2363378b2459)
-<br>
-![univariate](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/f340e85f-cbce-47e5-ad7a-9caf56342bc4)
-<br>
+Visualisasi Wordcloud pada Job Title:<br>
+![wordcloud job title](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/6e8909a8-28b8-415d-a173-8e0bf0c07325) <br>
+Visualisasi Bar Chart pada Work Type:<br>
+![work_type](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/e7c6448e-463d-4a7b-b922-2363378b2459) <br>
+Univariate Analysis <br>
+![univariate](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/f340e85f-cbce-47e5-ad7a-9caf56342bc4) <br>
+Multivariate Analysis <br>
 ![multivariate](https://github.com/adinplb/ML-Terapan-Proyek-Kedua/assets/61041719/ae7a299a-cc44-4a88-99e2-58a447a7759c)
 
 ## Data Preparation
-Pada tahap ini, lakukan data combination dengan fungsi merge, memilih data dengan fungsi unique, mengubah data dalam bentuk array, melakukan vektorisasi, TF-IDF 
-
-
-
-Berikut ini merupakan tahapan-tahapan yang dilakukan dalam mempersiapkan data untuk model yang dibangun dengan metode Content Based Filtering.
-
-Menghilangkan Missing Value
-
-Setelah dilakukan proses penggabungan data dari beberapa variabel, ditemukan missing value akibat banyaknya fitur yang digabungkan dari variabel-variabel tersebut. Missing value ini ditemukan pada fitur 'tag', dimana missing value yang terdeteksi sebanyak 52.549 data. Meskipun jumlah data ini sangat signifikan, missing value ini akan dihapus dari dataset dikarenakan fitur ini kurang berpengaruh terhadap sistem rekomendasi yang akan dibangun.
-
-Menghapus Data Duplikat
-
-Selanjutnya, dilakukan penghapusan data duplikat dari fitur 'movieId' menggunakan fungsi drop_duplicates(). Langkah ini penting untuk dilakukan karena dalam pemodelan yang dibangun, hanya akan digunakan fitur 'movieId' yang unik untuk membangun model rekomendasi.
-
-Membuat Dictionary
-
-Selanjutnya, dilakukan proses pembuatan dictionary yang digunakan untuk menentukan pasangan key-value pada data yang telah disiapkan sebelumnya. Setelah proses ini selesai dijalankan, data telah siap untuk dimasukkan ke dalam pemodelan untuk model yang dibangun dengan metode Content Based Filtering.
-
-Sedangkan berikut ini merupakan tahapan-tahapan yang dilakukan dalam mempersiapkan data untuk model yang dibangun dengan metode Collaborative Filtering.
+Pada tahap ini, lakukan data combination pada semua file csv dengan fungsi merge. Setelag digabung, pilih data dengan fungsi unique sehingga terhindari dari duplikasi. Data terpilih akan diubah ke dalam bentuk array untuk setiap atributnya. Kemudian, lakukan vektorisasi agar data menjadi bentuk matriks dan diakhiri dengan pembobotan TF-IDF. Berikut ini urutan pada Data Preparation yang akan digunakan dalam membangun model dengan metode CBF:
+- Menghilangkan Missing Value
+- Menghapus Data Duplikat
+- Ubah data ke dalam bentuk list 
+- Membuat Dictionary
+Selanjutnya, mempersiapkan data untuk model CF sebagai berikut:
+- 
 
 Memahami Data Rating
 
@@ -153,14 +138,6 @@ Membagi Data
 
 Langkah selanjutnya adalah membagi data menjadi dua subset, yaitu data latih (training data) dan data validasi (validation data) dengan rasio 80 : 20. Data latih digunakan untuk melatih model Collaborative Filtering dengan cara mempelajari pola dari data rating yang ada, sementara data validasi digunakan untuk menguji kinerja model yang telah dilatih dan melihat sejauh mana model dapat memberikan rekomendasi yang akurat dan relevan terhadap data yang belum pernah dilihat sebelumnya. Penggunaan data latih dan data validasi ini bertujuan untuk mengevaluasi performa model dan mencegah overfitting
 
-
-
-metode PCA, ubah tipe data fitur kategorikal menjadi bilangan biner integer, Metode IQR, SMOTE, dan Scalling Fitur akan dilakukan pada penelitian ini. Selain itu, dataset memang tidak seimbang; 357 Benign dan 212 Malignant sehingga SMOTE atau Teknik Over-sampling Minoritas Sintetis akan diterapkan. Menghapus outlier akan dilakukan juga dan diikuti oleh penskalaan fitur dengan normalisasi skor-z dimana hasil mean akan menjadi 0 dan standar deviasi 1. Ukuran data akan dipecah menjadi train set dan test set dengan rasio 80:20. Berikut tahapan persiapan data:
-- Ubah "Diagnosis" Fitur tipe "objek" menjadi nilai "biner integer" 0 dan 1. Tujuan dialkukan ini ialah model membutuhkan fitur input dalam bentuk numerik sehingga algoritma dapat diproses
-- Hapus outliers menggunakan Metode IQR di semua Fitur dan periksa bentuk data sehingga didapatkan Dataset bersih sebanyak 398 sampel. Metode ini dilakukan dengan tujuan agar pencilan dapat meningkatkan varians dalam bentuk dataset sehingga metode IQR merupakan teknik yang kuat dalam mendeteksi dan menghapus pencilan. 
-- Kurangi dimensi fitur radius_mean, perimeter_mean, area_mean, radius_worst, perimeter_worst, dan area_worst menggunakan PCA. Hasil pairplot menunjukkan keenam fitur numerik tersebut memiliki korelasi yang tinggi sehingga dapat dikurangi menggunakan PCA yang membantu mengurangi noise dan redudancy dalam dataset
-- Kemudian, memisahkan data menjadi Train Set and Test Set + SMOTE untuk Penanganan Imbalanced data dan hanya dilakukan pada data train saja. Tujuan dilakukannya SMOTE guna memaksimalkan akurasi keseluruhan dan mempertahankan keaslian data saat melakukan latih data. 
-- Melakukan Feature Scalling menggunakan Z-Score Normalization. Tujuan dari teknik ini ialah memastikan semua fitur memiliki skala yang sama sehingga hasil mean menjadi 0 dan standar deviasinya menjadi 1.
 
 
 
