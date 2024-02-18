@@ -65,7 +65,7 @@ Dataset yang digunakan adalah dataset yang diambil dari Kaggle yakni [Linkedin J
    - formatted_experience_level: Job experience level (entry, associate, executive, etc)
    - skills_desc: Description detailing required skills for job
    - listed_time: Time when the job was listed
-   - posting_domain: Domain of the website with application
+   - posting_domain: Domain of the website with application 
    - sponsored: Whether the job listing is sponsored or promoted.
    - work_type: Type of work associated with the job
    - currency: Currency in which the salary is provided.
