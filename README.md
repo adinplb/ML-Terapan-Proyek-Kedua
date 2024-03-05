@@ -107,21 +107,18 @@ Multivariate Analysis <br>
 
 ## Data Preparation
 Pada tahap ini, lakukan data combination pada semua file csv dengan fungsi merge. Setelah digabung, pilih data dengan fungsi unique sehingga terhindari dari duplikasi. Data terpilih akan diubah ke dalam bentuk array untuk setiap atributnya. Kemudian, lakukan vektorisasi agar data menjadi bentuk matriks dan diakhiri dengan pembobotan TF-IDF. Berikut ini urutan pada Data Preparation yang akan digunakan dalam membangun model dengan metode CBF: <br>
-- Menghilangkan Missing Value
-Sebelumnya kita melihat adanya Missing Value pada data kita, tepatnya pada atribut num_user_for_reviews jadi kita akan menghapusnya dengan fungsi dropna() <br>
-- Menghapus Data Duplikat
-Kalo kita lihat pada data num_user_for_reviews memiliki nilai review yang sama, jadi kita akan menghapusnya agar menjadi setiap film memiliki nilai review yang berbeda. Cara yang kita gunakan adalah dengan drop_duplicates()
-- Ubah data ke dalam bentuk list
-Pada tahap ini, kami mencoba untuk mengubah variable yang di butuhkan yaitu genres movie_title num_user_for_reviews ke dalam sebuah list. Dengan tujuan untuk menjadikannya data dictionary setelah itu.
-- Membuat Dictionary
-Kita membuat variable baru dengan nama movie_new dengan isi Dictionary tiga atribute kita, di bantu dengan pd.DataFrame() dalam membuat Dictionary. Tujuan nya untuk menentukan key:value pada atrbiute dataset kita.
+- Menghilangkan Missing Value <br>
+Sebelumnya kita melihat adanya Missing Value pada data kita jadi kita akan menghapusnya dengan fungsi dropna() <br>
+- Menghapus Data Duplikat <br>
+kita akan menghapusnya agar menjadi setiap jenis pekerjaan memiliki nilai yang berbeda. Cara yang kita gunakan adalah dengan drop_duplicates()
+- Ubah data ke dalam bentuk list <br>
+Pada tahap ini, kami mencoba untuk mengubah variable yang dibutuhkan yaitu tipe jenis pekerjaan dan jenis pekerjaan ke dalam sebuah list. Dengan tujuan untuk menjadikannya data dictionary setelah itu.
+- Membuat Dictionary <br>
+Kita membuat variable baru dengan nama Job_Title dengan isi Dictionary tiga atribute kita, di bantu dengan pd.DataFrame() dalam membuat Dictionary. Tujuan nya untuk menentukan key:value pada atrbiute dataset kita.
 
 
 ## Modelling
-Tahap kali ini kita akan menggunakan Content Based Filltering yaitu, merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Di bantu dengan teknik TF IDF dan Cosine Similarity untuk mencari korelasi antara judul film satu dengan yang lainnya berdasarkan genre.
-
-Dalam Cosine Similarity, objek data dalam kumpulan data diperlakukan sebagai vektor. Rumus untuk mencari persamaan kosinus antara dua vektor adalah,
-
+Tahap kali ini kita akan menggunakan Content Based Filltering yaitu, merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Di bantu dengan teknik TF IDF dan Cosine Similarity untuk mencari korelasi antara judul film satu dengan yang lainnya berdasarkan genre. Dalam Cosine Similarity, objek data dalam kumpulan data diperlakukan sebagai vektor. Rumus untuk mencari persamaan kosinus antara dua vektor adalah,
 Top-N Recommendation: 
 
 | Job Title     | Work Type |
@@ -131,16 +128,7 @@ Top-N Recommendation:
 | Office Manager | Full-Time |
 | Executive Chef - Stadium Operations | Full-Time |
 | Manager, Engineering | Full-Time |
-
-
+<br>
 
 ## Evaluation
-Matrik yang kita gunakan untuk sistem rekomendasi Content Based Filtering adalah Matrik Precision, yaitu P = Hasil rekomendasi relevan/total rekomendasi. Sebagai gambaran kita bisa melihat illustrasi di bawah ini.
-
-TabelCM
-
-Jika kita lihat hasil kita, kita memberi kepada users 5 rekomendasi film. Dari ke 5 rekomendasi ada 5 yang relevan, maka presisi adalah 100%. Bagaimana kita tau bahwa itu menghasilkan 100%?
-
-Sebelumnya pengguna menonton film Avatar yang bergenre Action, Adventure, Fantasy, Sci-Fi. Kemudian program kita mencoba memberi 5 rekomendasi film yang serupa kepada pengguna berdasarkan genre.
-
-Dan hasil yang di dapat adalah ke 5 rekomendasi sistem berhasil memberi 5 film dengan genre yang sama/relevan kepada user. Dengan begitu kita tau bahwa hasil presisi dari sistem rekomendasi untuk Avatar adalah 100%.
+Matrik yang kita gunakan untuk sistem rekomendasi Content Based Filtering adalah Matrik Precision, yaitu P = Hasil rekomendasi relevan/total rekomendasi. Berdasarkan hasil rekomendasi 5 jenis pekerjaan yang relevan maka presisi adalah 100%. Hal ini menunjukkan bahwa sebelumnya jenis pekerjaan yang berjenis tipe yang sama yaitu full time. Kemudian program kita mencoba memberi 5 rekomendasi jenis pekerjaan yang serupa kepada pengguna berdasarkan jenis tipe pekerjaan. Dan hasil yang di dapat adalah ke 5 rekomendasi sistem berhasil memberi 5 jenis pekerjaan dengan tipe pekerjaan yang sama/relevan kepada user. Dengan begitu kita tau bahwa hasil presisi dari sistem rekomendasi untuk Technical Specialist adalah 100%.
